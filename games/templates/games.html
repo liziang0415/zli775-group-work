@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse games page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}" >
+</head>
+<body>
+    <div id="navBar">
+        <img id="gameIcon" src="css/layout.css">
+        <h2>Game Listing</h2>
+        <h4>Home</h4>
+        <h4>All games</h4>
+        
+        <h6 id="navAuthorName">©️Tong Chen</h6>
+    </div>
+    <div id="content">
+        <div id="header">
+            <h1>CS235 Game Library</h1>
+            <h6 id="contentAuthorName">©️Tong Chen</h6>
+        </div>
+        <div id ="genreBar">
+            <h4 class="genre">Action</h4>
+            <h4 class="genre">Sports</h4>
+            <h4 class="genre">Party game</h4>
+            <h4 class="genre">Adventure game</h4>
+        </div>
+
+<div id="about-container">
+    {% for game in games %}
+        <div class="game-display">
+            <p class="gameName">{{ game.title }}</p>
+            <img src="{{ game.image_url }}">
+        </div>
+    {% endfor %}
+</div>
+
+
+        <div class="pagination">
+            {% if page > 1 %}
+            <a href="{{ url_for('game', page=page-1) }}">Previous</a>
+            {% endif %}
+            <span>Page {{ page }}</span>
+            {% if games|length == 18 %}  <!-- Only show the Next link if there are 18 games on the current page -->
+            <a href="{{ url_for('game', page=page+1) }}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
