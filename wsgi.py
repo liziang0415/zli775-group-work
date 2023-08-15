@@ -1,4 +1,4 @@
-"""App entry point."""
+
 from games import create_app
 
 app = create_app()

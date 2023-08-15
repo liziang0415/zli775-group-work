@@ -1,6 +1,4 @@
 from datetime import datetime
-
-
 class Publisher:
     def __init__(self, publisher_name: str):
         if publisher_name == "" or type(publisher_name) is not str:
@@ -382,3 +380,4 @@ class Wishlist:
         else:
             self.__current += 1
             return self.__list_of_games[self.__current - 1]
+
