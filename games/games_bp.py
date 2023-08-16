@@ -10,18 +10,25 @@ def game():
     genre_filter = request.args.get('genre', None)
     per_page = 18
     offset = (page - 1) * per_page
+    sort_order = request.args.get('sort', 'title')
 
     reader = GameFileCSVReader("games/adapters/datareader/games.csv")
     reader.read_csv_file()
-    nmsl = reader.dataset_of_games
-
-    all_genres = reader.dataset_of_genres  # Retrieve all unique genres
+    game_list = reader.dataset_of_games
+    all_genres = reader.dataset_of_genres
 
     if genre_filter:
-        nmsl = [game for game in nmsl if genre_filter in [genre.genre_name for genre in game.genres]]
+        game_list = [game for game in game_list if genre_filter in [genre.genre_name for genre in game.genres]]
 
-    nmsl.sort(key=lambda x: x.title)
-    games_to_display = nmsl[offset:offset + per_page]
+    if sort_order == 'release_date':
+        game_list.sort(key=lambda x: x.release_date)
+    elif sort_order == 'price':
+        game_list.sort(key=lambda x: x.price, reverse=True)  # Assuming price is a numeric value
+    else:  # Default to sorting by title
+        game_list.sort(key=lambda x: x.title.lower())  # Sorting alphabetically, case-insensitive
+
+    games_to_display = game_list[offset:offset + per_page]
 
     return render_template("games.html", games=games_to_display, page=page, current_genre=genre_filter,
-                           genres=all_genres)
+                           genres=all_genres, current_sort=sort_order)
+

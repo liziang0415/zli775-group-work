@@ -20,15 +20,20 @@
             <h1>CS235 Game Library</h1>
             <h6 id="contentAuthorName">©️Tong Chen</h6>
         </div>
+ <form method="get" action="{{ url_for('games_bp.game') }}">
+    <select name="genre" onchange="this.form.submit()">
+        <option value="">Select Genre</option>
+        {% for genre in genres %}
+            <option value="{{ genre.genre_name }}" {% if current_genre == genre.genre_name %}selected{% endif %}>{{ genre.genre_name }}</option>
+        {% endfor %}
+    </select>
 
-        <form method="get" action="{{ url_for('games_bp.game') }}">
-            <select name="genre" onchange="this.form.submit()">
-                <option value="">Select Genre</option>
-                {% for genre in genres %}
-                    <option value="{{ genre.genre_name }}" {% if current_genre == genre.genre_name %}selected{% endif %}>{{ genre.genre_name }}</option>
-                {% endfor %}
-            </select>
-        </form>
+    <select name="sort" onchange="this.form.submit()">
+        <option value="title" {% if current_sort == 'title' %}selected{% endif %}>Alphabetical Order</option>
+        <option value="release_date" {% if current_sort == 'release_date' %}selected{% endif %}>Release Date</option>
+        <option value="price" {% if current_sort == 'price' %}selected{% endif %}>Price</option>
+    </select>
+</form>
 
         <div id="about-container">
             {% for game in games %}
@@ -39,15 +44,16 @@
             {% endfor %}
         </div>
 
-        <div class="pagination">
-            {% if page > 1 %}
-                <a href="{{ url_for('games_bp.game', page=page-1) }}">Previous</a>
-            {% endif %}
-            <span>Page {{ page }}</span>
-            {% if games|length == 18 %}  <!-- Only show the Next link if there are 18 games on the current page -->
-                <a href="{{ url_for('games_bp.game', page=page+1) }}">Next</a>
-            {% endif %}
-        </div>
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="{{ url_for('games_bp.game', page=page-1, sort=current_sort) }}">Previous</a>
+        {% endif %}
+        <span>Page {{ page }}</span>
+        {% if games|length == 18 %}
+        <a href="{{ url_for('games_bp.game', page=page+1, sort=current_sort) }}">Next</a>
+        {% endif %}
     </div>
+
+
 </body>
 </html>
