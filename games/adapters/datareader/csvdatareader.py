@@ -26,6 +26,9 @@ class GameFileCSVReader:
                     game.image_url = row["Header image"]
                     game.price = float(row["Price"])
                     game.description = row["About the game"]
+                    screenshot_urls = row["Screenshots"].split(",")
+                    for url in screenshot_urls:
+                        game.add_screenshot(url.strip())
 
                     publisher = Publisher(row["Publishers"])
                     self.__dataset_of_publishers.add(publisher)

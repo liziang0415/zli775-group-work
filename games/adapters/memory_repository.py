@@ -23,7 +23,7 @@ class MemoryRepository(AbstractRepository):
 
 def populate(repo: AbstractRepository):
     dir_name = os.path.dirname(os.path.abspath(__file__))
-    game_file_name = os.path.join(dir_name, "datareader/games.csv")
+    game_file_name = os.path.join(dir_name, "data/games.csv")
     reader = GameFileCSVReader(game_file_name)
     reader.read_csv_file()
     games = reader.dataset_of_games

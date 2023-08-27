@@ -1,7 +1,8 @@
-body{
+body {
     margin: 0;
 }
-#navBar{
+
+#navBar {
     background-color: #5F9EA0;
     text-align: center;
     height: 100%;
@@ -11,83 +12,83 @@ body{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-#gameIcon{
+#gameIcon {
     width: 100px;
     margin-top: 15%;
 }
 
-#navAuthorName{
+#navAuthorName {
     bottom: 0;
     position: absolute;
     margin-bottom: 0;
 }
 
-#content{
+#content {
     text-align: center;
     margin-left: 20%;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
 }
 
-#header{
+#header {
     background-color: #F0FFFF;
     padding: 20px;
 }
 
-#genreBar{
+#genreBar {
     background-color: #ADD8E6;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     display: flex;
     justify-content: space-between;
 }
 
-.genre{
+.genre {
     margin-left: 5%;
     margin-right: 5%;
 }
 
-h1{
+h1 {
     margin: 0;
 }
 
-#contentAuthorName{
+#contentAuthorName {
     margin-top: 0;
     margin-bottom: 0;
 }
 
 #about-container {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping of items */
-    justify-content: space-between; /* Space items evenly */
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .game-display {
-    flex-basis: calc(33.33% - 20px); /* Each item takes up roughly a third of the container minus some margin */
-    margin-bottom: 20px; /* Space between rows */
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    flex-basis: calc(33.33% - 20px);
+    margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 
-
-img{
+img {
     width: 300px;
 }
 
-#gameTitle{
+#gameTitle {
     text-align: center;
 }
 
-.gameDescriptionTitle,.gameDescriptionContent{
+.gameDescriptionTitle, .gameDescriptionContent {
     display: inline;
 }
 
-.gameDescriptionTitle{
+.gameDescriptionTitle {
     color: #3E6583;
 }
 
-p{
+p {
     line-height: 1.5;
 }
+
 select {
     padding: 10px;
     margin: 10px;
@@ -96,11 +97,11 @@ select {
 }
 
 
-#searchBar1{
+#searchBar1 {
     border-radius: 20px;
 }
 
-#searchBar2{
+#searchBar2 {
     border-radius: 20px;
 }
 
@@ -119,3 +120,8 @@ select {
 .pagination a:hover {
     text-decoration: underline;
 }
+
+.slider {
+    overflow: hidden;
+}
+

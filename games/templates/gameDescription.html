@@ -3,30 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Game Description page</title>
-    <link rel="stylesheet" href="static/css/layout.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
 </head>
 <body>
-    <div id="navBar">
-        <img id="gameIcon" src="static/img/1.png">
-        <h2>Game Listing</h2>
-        <h4>Home</h4>
-        <h4>All games</h4>
-        <h6 id="navAuthorName">©️Tong Chen</h6>
+{% include 'navbar.html' %}
+<div id="content">
+    <div id="header">
+        <h1>CS235 Game Library</h1>
+        <h6 id="contentAuthorName">©️Tong Chen</h6>
     </div>
-    <div id="content">
-        <div id="header">
-            <h1>CS235 Game Library</h1>
-            <h6 id="contentAuthorName">©️Tong Chen</h6>
+    <div id="about">
+        <h2 id="gameTitle">{{ game.title }}</h2>
+        <img src={{ game.image_url }}><br>
+        <h3 class="gameDescriptionTitle"><em>RELEASE DATE:</em></h3>
+        <p class="gameDescriptionContent">{{ game.release_date }}</p><br><br>
+        <h3 class="gameDescriptionTitle"><em>PRICE:</em></h3>
+        <p class="gameDescriptionContent">{{ game.price }}</p><br><br>
+        <h3 class="gameDescriptionTitle"><em>PUBLISHER:</em></h3>
+        <p class="gameDescriptionContent">{{ game.publisher.publisher_name }}</p><br><br>
+        <h3 class="gameDescriptionTitle"><em>GENRE:</em></h3>
+        <p class="gameDescriptionContent">
+            {% for genre in game.genres %}
+                {{ genre.genre_name }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p><br><br>
+        <div id="screenshots">
+            <h3>Screenshots:</h3>
+            {% for screenshot in game.screenshots %}
+                <img src="{{ screenshot }}" alt="Screenshot" width="300">
+            {% endfor %}
         </div>
-        <div id="about">
-            <h2 id="gameTitle">Animal Crossing</h2>
-            <img src="https://cdn.akamai.steamstatic.com/steam/apps/1228870/header.jpg?t=1601679243"><br>
-            <h3 class="gameDescriptionTitle"><em>RELEASE DATE:</em> </h3><p class="gameDescriptionContent">Nov 12, 2003</p><br><br>
-            <h3 class="gameDescriptionTitle"><em>PRICE:</em> </h3><p class="gameDescriptionContent">$9.99</p><br><br>
-            <h3 class="gameDescriptionTitle"><em>ABOUT:</em> </h3><P class="gameDescriptionContent">Animal Crossing, known in Japan as Dōbutsu no Mori+,is a 2001 social simulation game developed and published by Nintendo for the GameCube. As such, it is the first game in the Animal Crossing series, and is also an enhanced version of the Nintendo 64 game Dōbutsu no Mori, which was only released in Japan earlier the same year, and was followed by another edition, Dōbutsu no Mori in 2003.
-            Animal Crossing is an endless and non-linear game in which a human takes up residence in a village inhabited by anthropomorphic animals. The main goal of the game is to save money in order to pay off the mortgage on the human's house. This requires collecting natural materials and selling them. The human can engage in everyday life in the village, interact with the animals, attend events, and contribute to the village's development. The game's western localization differs significantly from the original release in that Japanese holidays and cultural references are replaced with Western ones.</P>
+
+        <h3 class="gameDescriptionTitle"><em>ABOUT:</em></h3>
+        <p class="gameDescriptionContent">{{ game.description }}</p><br><br>
     </div>
-    </div>
+</div>
 
 </body>
 </html>

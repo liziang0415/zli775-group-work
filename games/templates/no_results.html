@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No Results Found</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div id="content">
+        <div id="header">
+            <h1>CS235 Game Library - No Results Found</h1>
+            <h6 id="contentAuthorName">©️Tong Chen</h6>
+        </div>
+
+        <div id="about-container">
+            <p>Sorry, we couldn't find any games matching your search criteria.</p>
+            <p><a href="/">Go back to homepage</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
