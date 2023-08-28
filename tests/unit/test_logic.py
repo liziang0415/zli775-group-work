@@ -39,4 +39,3 @@ def test_get_filtered_and_sorted_games():
 def test_non_existing_search_key():
     games = get_filtered_games(repo, query='NonExistent')
     assert games == []
-
