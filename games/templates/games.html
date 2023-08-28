@@ -17,7 +17,7 @@
     <form method="get" action="{{ url_for('games_bp.game') }}">
         <select name="genre" onchange="this.form.submit()">
             <option value="">Select Genre</option>
-            {% for genre in genres %}
+            {% for genre in all_genres %}
                 <option value="{{ genre }}"
                         {% if current_genre == genre %}selected{% endif %}>{{ genre }}</option>
             {% endfor %}
@@ -35,7 +35,6 @@
         {% for game in games %}
             <div class="game-display">
                 <p class="gameName">{{ game.title }}</p>
-                <!-- Wrap the image in an anchor tag -->
                 <a href="{{ url_for('game_description_bp.game_description', title=game.title) }}">
                     <img src="{{ game.image_url }}">
                 </a>

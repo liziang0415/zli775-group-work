@@ -1,5 +1,6 @@
 import pytest
-from games.services import get_all_games, get_filtered_games, find_game_by_title, get_filtered_and_sorted_games
+from games.services import get_all_games, get_filtered_games, find_game_by_title, get_filtered_and_sorted_games, \
+    get_sorted_publisher_and_genres
 from games.adapters.memory_repository import MemoryRepository, populate
 
 repo = MemoryRepository()
@@ -9,6 +10,12 @@ populate(repo)
 def test_get_all_games():
     games = get_all_games(repo)
     assert len(games) == repo.get_number_of_game()
+
+
+def test_get_all_publisher():
+    publishers, genres = get_sorted_publisher_and_genres(repo)
+    assert len(publishers) == 798
+    assert len(genres) == 24
 
 
 def test_find_game_by_title():

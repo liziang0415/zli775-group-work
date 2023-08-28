@@ -3,5 +3,22 @@
     <h2>Game Listing</h2>
     <h4><a href="/" target="_blank">Home</a></h4>
     <h4><a href="games" target="_blank">All Games</a></h4>
+    <form action="/search" method="get">
+        <input id="searchBar1" type="text" name="query" placeholder="Enter game name">
+        <select name="genre">
+            <option value="">All Genres</option>
+            {% for genre in all_genres %}
+                <option value="{{ genre }}">{{ genre }}</option>
+            {% endfor %}
+        </select>
+        <select name="publisher">
+            <option value="">All Publishers</option>
+            {% for publisher in all_publishers %}
+                <option value="{{ publisher }}">{{ publisher }}</option>
+            {% endfor %}
+        </select>
+        <button id="searchBar2" type="submit">Search</button>
+    </form>
+
     <h6 id="navAuthorName">©️Tong Chen</h6>
 </div>
