@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse games page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+</head>
+<body>
+{% include 'navbar.html' %}
+
+
+<div id="content">
+    <div id="header">
+        <h1>CS235 Game Library</h1>
+        <h6 id="contentAuthorName">©️Paul/Kevin/Tong</h6>
+    </div>
+    <form method="get" action="{{ url_for('games_bp.game') }}">
+        <select name="genre" onchange="this.form.submit()">
+            <option value="">Select Genre</option>
+            {% for genre in all_genres %}
+                <option value="{{ genre }}"
+                        {% if current_genre == genre %}selected{% endif %}>{{ genre }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="sort" onchange="this.form.submit()">
+            <option value="title" {% if current_sort == 'title' %}selected{% endif %}>Alphabetical Order</option>
+            <option value="release_date" {% if current_sort == 'release_date' %}selected{% endif %}>Release Date
+            </option>
+            <option value="price" {% if current_sort == 'price' %}selected{% endif %}>Price</option>
+        </select>
+    </form>
+
+    <div id="about-container">
+        {% for game in games %}
+            <div class="game-display">
+                <p class="gameName">{{ game.title }}</p>
+                <a href="{{ url_for('game_description_bp.game_description', title=game.title) }}">
+                    <img src="{{ game.image_url }}">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('games_bp.game', page=page-1, sort=current_sort) }}">Previous</a>
+        {% endif %}
+        <span>Page {{ page }}</span>
+        {% if games|length == 18 %}
+            <a href="{{ url_for('games_bp.game', page=page+1, sort=current_sort) }}">Next</a>
+        {% endif %}
+    </div>
+
+
+</body>
+</html>

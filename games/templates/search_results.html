@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+</head>
+<body>
+{% include 'navbar.html' %}
+
+<div id="content">
+    <div id="header">
+        <h1>CS235 Game Library - Search Results</h1>
+        <h3>Search Query: {{ query }}</h3>
+        <h3>Genre: {{ genre if genre else 'All' }}</h3>
+        <h3>Publisher: {{ publisher if publisher else 'All' }}</h3>
+        <h6 id="contentAuthorName">©️Paul/Kevin/Tong</h6>
+    </div>
+
+    <div id="about-container">
+        {% for game in games %}
+            <div class="game-display">
+                <p class="gameName">{{ game.title }}</p>
+                <a href="{{ url_for('game_description_bp.game_description', title=game.title) }}">
+                    <img src="{{ game.image_url }}">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
