@@ -145,4 +145,6 @@ select {
     text-align: center;
 }
 
-
+.resultDisplay{
+    text-align: left;
+}
