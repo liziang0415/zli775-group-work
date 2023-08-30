@@ -12,7 +12,7 @@
 <div id="content">
     <div id="header">
         <h1>CS235 Game Library</h1>
-        <h6 id="contentAuthorName">©️Tong Chen</h6>
+        <h6 id="contentAuthorName">©️Paul/Kevin/Tong</h6>
     </div>
     <form method="get" action="{{ url_for('games_bp.game') }}">
         <select name="genre" onchange="this.form.submit()">
@@ -43,13 +43,20 @@
     </div>
 
     <div class="pagination">
+        <a href="{{ url_for('games_bp.game', page=1, sort=current_sort) }}">First</a>
         {% if page > 1 %}
             <a href="{{ url_for('games_bp.game', page=page-1, sort=current_sort) }}">Previous</a>
         {% endif %}
-        <span>Page {{ page }}</span>
+        <span>Page {{ page }} of {{ total_pages }}</span>
+        <select name="page" onchange="location.href='{{ url_for('games_bp.game', sort=current_sort) }}&page='+this.value">
+            {% for i in range(1, total_pages+1) %}
+                <option value="{{ i }}" {% if page == i %}selected{% endif %}>{{ i }}</option>
+            {% endfor %}
+        </select>
         {% if games|length == 18 %}
             <a href="{{ url_for('games_bp.game', page=page+1, sort=current_sort) }}">Next</a>
         {% endif %}
+        <a href="{{ url_for('games_bp.game', page=total_pages, sort=current_sort) }}">Last</a>
     </div>
 
 

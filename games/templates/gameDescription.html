@@ -10,11 +10,19 @@
 <div id="content">
     <div id="header">
         <h1>CS235 Game Library</h1>
-        <h6 id="contentAuthorName">©️Tong Chen</h6>
+        <h6 id="contentAuthorName">©️Paul/Kevin/Tong</h6>
     </div>
     <div id="about">
         <h2 id="gameTitle">{{ game.title }}</h2>
-        <img src={{ game.image_url }}><br>
+        <div id="gameImageContainer">
+            <img src="{{ game.image_url }}">
+        </div>
+        <div id="screenshots">
+            <h3>Screenshots:</h3>
+            {% for screenshot in game.screenshots %}
+                <img src="{{ screenshot }}" alt="Screenshot" width="300">
+            {% endfor %}
+        </div>
         <h3 class="gameDescriptionTitle"><em>RELEASE DATE:</em></h3>
         <p class="gameDescriptionContent">{{ game.release_date }}</p><br><br>
         <h3 class="gameDescriptionTitle"><em>PRICE:</em></h3>
@@ -27,12 +35,7 @@
                 {{ genre.genre_name }}{% if not loop.last %}, {% endif %}
             {% endfor %}
         </p><br><br>
-        <div id="screenshots">
-            <h3>Screenshots:</h3>
-            {% for screenshot in game.screenshots %}
-                <img src="{{ screenshot }}" alt="Screenshot" width="300">
-            {% endfor %}
-        </div>
+
 
         <h3 class="gameDescriptionTitle"><em>ABOUT:</em></h3>
         <p class="gameDescriptionContent">{{ game.description }}</p><br><br>

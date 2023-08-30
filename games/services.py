@@ -1,11 +1,9 @@
 from datetime import datetime
-
 from games.adapters.repository import AbstractRepository
 
 
 def get_all_games(repo: AbstractRepository):
     return repo.get_games()
-
 
 def get_sorted_publisher_and_genres(repo: AbstractRepository):
     all_publisher = set()
@@ -61,5 +59,6 @@ def get_filtered_and_sorted_games(repo: AbstractRepository, page=1, genre_filter
     per_page = 18
     offset = (page - 1) * per_page
     games_to_display = all_games[offset:offset + per_page]
+    total_pages = (len(all_games) + per_page - 1) // per_page
 
-    return games_to_display
+    return games_to_display, total_pages

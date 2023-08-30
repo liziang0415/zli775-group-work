@@ -132,3 +132,19 @@ select {
     padding: 0;
 }
 
+#about{
+    text-align:left;
+    margin-left: 20px;
+}
+
+#screenshots{
+    text-align:center;
+}
+
+#gameImageContainer {
+    text-align: center;
+}
+
+.resultDisplay{
+    text-align: left;
+}

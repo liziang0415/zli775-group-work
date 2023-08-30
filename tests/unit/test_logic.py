@@ -36,8 +36,9 @@ def test_get_filtered_games_by_publisher():
 
 
 def test_get_filtered_and_sorted_games():
-    games = get_filtered_and_sorted_games(repo, page=1, genre_filter='Action', sort_order='title')
+    games , total_page= get_filtered_and_sorted_games(repo, page=1, genre_filter='Action', sort_order='title')
     publisher, genres = get_sorted_publisher_and_genres(repo)
+
     assert len(games) == 18
     assert games[0].title == '10 Second Ninja X'
     assert 'Action' in genres
