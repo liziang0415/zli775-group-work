@@ -1,2 +1,8 @@
 pytest
 Flask==2.3.2
+Flask-WTF==1.1.1
+password-validator==1.0
+wtforms==2.3.3
+flask-login
+bcrypt
+SQLAlchemy==1.4.41

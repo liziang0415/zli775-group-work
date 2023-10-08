@@ -7,15 +7,9 @@
 </head>
 <body>
 {% include 'navbar.html' %}
-
-
 <div id="content">
-    <div id="header">
-        <h1>CS235 Game Library</h1>
-        <h6 id="contentAuthorName">©️Paul/Kevin/Tong</h6>
-    </div>
     <form method="get" action="{{ url_for('games_bp.game') }}">
-        <select name="genre" onchange="this.form.submit()">
+        <select class="selectBar" name="genre" onchange="this.form.submit()">
             <option value="">Select Genre</option>
             {% for genre in all_genres %}
                 <option value="{{ genre }}"
@@ -23,7 +17,7 @@
             {% endfor %}
         </select>
 
-        <select name="sort" onchange="this.form.submit()">
+        <select class="selectBar" name="sort" onchange="this.form.submit()">
             <option value="title" {% if current_sort == 'title' %}selected{% endif %}>Alphabetical Order</option>
             <option value="release_date" {% if current_sort == 'release_date' %}selected{% endif %}>Release Date
             </option>
@@ -59,9 +53,6 @@
     {% endif %}
     <a href="{{ url_for('games_bp.game', page=total_pages, sort=current_sort, genre=current_genre) }}">Last</a>
 </div>
-
-
-
 
 </body>
 </html>

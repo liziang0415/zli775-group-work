@@ -1,9 +1,11 @@
 from datetime import datetime
 from games.adapters.repository import AbstractRepository
+from wtforms.validators import ValidationError
 
 
 def get_all_games(repo: AbstractRepository):
     return repo.get_games()
+
 
 def get_sorted_publisher_and_genres(repo: AbstractRepository):
     all_publisher = set()
@@ -50,7 +52,8 @@ def get_filtered_and_sorted_games(repo: AbstractRepository, page=1, genre_filter
         all_games = [game for game in all_games if genre_filter in [genre.genre_name for genre in game.genres]]
 
     if sort_order == 'release_date':
-        all_games.sort(key=lambda x: datetime.strptime(x.release_date, "%b %d, %Y") if x.release_date else datetime.min, reverse=True)
+        all_games.sort(key=lambda x: datetime.strptime(x.release_date, "%b %d, %Y") if x.release_date else datetime.min,
+                       reverse=True)
     elif sort_order == 'price':
         all_games.sort(key=lambda x: x.price, reverse=True)
     else:
@@ -62,3 +65,9 @@ def get_filtered_and_sorted_games(repo: AbstractRepository, page=1, genre_filter
     total_pages = (len(all_games) + per_page - 1) // per_page
 
     return games_to_display, total_pages
+
+
+
+
+class NameNotUniqueException(Exception):
+    pass

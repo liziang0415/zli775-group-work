@@ -1,3 +1,5 @@
+import pytest
+
 from games import MemoryRepository, populate
 from games.services import get_all_games, get_filtered_games, find_game_by_title, get_filtered_and_sorted_games, \
     get_sorted_publisher_and_genres
@@ -36,7 +38,7 @@ def test_get_filtered_games_by_publisher():
 
 
 def test_get_filtered_and_sorted_games():
-    games , total_page= get_filtered_and_sorted_games(repo, page=1, genre_filter='Action', sort_order='title')
+    games, total_page = get_filtered_and_sorted_games(repo, page=1, genre_filter='Action', sort_order='title')
     publisher, genres = get_sorted_publisher_and_genres(repo)
 
     assert len(games) == 18
@@ -47,3 +49,4 @@ def test_get_filtered_and_sorted_games():
 def test_non_existing_search_key():
     games = get_filtered_games(repo, query='NonExistent')
     assert games == []
+

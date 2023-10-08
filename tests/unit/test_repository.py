@@ -1,6 +1,7 @@
 import pytest
 from games.adapters.memory_repository import MemoryRepository
-from games.domainmodel.model import Game, Genre, Publisher
+from games.domainmodel.model import Game, Genre, Publisher, User, Review
+from games.services import NameNotUniqueException
 
 
 @pytest.fixture
@@ -11,6 +12,11 @@ def repo():
     repo.add_game(game1)
     repo.add_game(game2)
     return repo
+
+
+@pytest.fixture
+def user():
+    return User("JohnDoe", "Password")
 
 
 def test_add_game(repo):
@@ -68,3 +74,61 @@ def test_search_games_by_genre(repo):
     search_result = [game for game in repo.get_games() if genre in game.genres]
     assert len(search_result) == 1
     assert search_result[0].game_id == 1
+
+def test_add_user_with_existing_username(repo, user):
+    repo.add_user(user)
+    with pytest.raises(NameNotUniqueException):
+        repo.add_user(user)
+
+
+def test_add_and_get_user(repo, user):
+    repo.add_user(user)
+    retrieved_user = repo.get_user("JohnDoe")
+    assert retrieved_user == user, "The retrieved user should be equal to the added user."
+
+
+def test_add_and_get_review(repo, user):
+    game = repo.get_games()[0]
+    review = Review(user, game, 5,"Great game!")
+
+    repo.add_review(review)
+    reviews = repo.get_reviews_for_game(game.title)
+
+    assert len(reviews) == 1, "The length of reviews should be 1 after adding a review."
+    assert reviews[0] == review, "The retrieved review should be equal to the added review."
+
+
+def test_add_and_remove_from_wishlist(repo, user):
+    repo.add_user(user)
+    game = repo.get_games()[0]
+
+    repo.add_to_wishlist("JohnDoe", game)
+    assert repo.is_in_wishlist("JohnDoe", game), "The game should be in the wishlist after being added."
+
+    wishlist = repo.get_wishlist("JohnDoe")
+    assert game in wishlist, "The game should be in the wishlist after being added."
+
+    repo.remove_from_wishlist("JohnDoe", game)
+    assert not repo.is_in_wishlist("JohnDoe", game), "The game should not be in the wishlist after being removed."
+
+    wishlist = repo.get_wishlist("JohnDoe")
+    assert game not in wishlist, "The game should not be in the wishlist after being removed."
+
+
+def test_get_wishlist(repo, user):
+    repo.add_user(user)
+    game = repo.get_games()[0]
+    repo.add_to_wishlist("JohnDoe", game)
+
+    wishlist = repo.get_wishlist("JohnDoe")
+    assert game in wishlist, "The game should be in the wishlist after being added."
+
+
+def test_is_in_wishlist(repo, user):
+    repo.add_user(user)
+    game = repo.get_games()[0]
+
+    assert not repo.is_in_wishlist("JohnDoe", game), "The game should not be in the wishlist initially."
+
+    repo.add_to_wishlist("JohnDoe", game)
+    assert repo.is_in_wishlist("JohnDoe", game), "The game should be in the wishlist after being added."

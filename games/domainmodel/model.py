@@ -1,4 +1,6 @@
 from datetime import datetime
+
+
 class Publisher:
     def __init__(self, publisher_name: str):
         if publisher_name == "" or type(publisher_name) is not str:
@@ -93,6 +95,7 @@ class Game:
             self.__publisher = publisher
         else:
             self.__publisher = None
+
     @property
     def screenshots(self) -> list:
         return self.__screenshots
@@ -196,6 +199,15 @@ class Game:
         except ValueError:
             print(f"Could not find {genre} in list of genres.")
             pass
+
+    def average_rating(self):
+        if len(self.__reviews) == 0:
+            return "No ratings yet"
+        total_rating = sum([review.rating for review in self.__reviews])
+        return round(total_rating / len(self.__reviews), 2)
+
+    def add_review(self, review):
+        self.__reviews.append(review)
 
     def __repr__(self):
         return f"<Game {self.__game_id}, {self.__game_title}>"
@@ -387,4 +399,3 @@ class Wishlist:
         else:
             self.__current += 1
             return self.__list_of_games[self.__current - 1]
-
