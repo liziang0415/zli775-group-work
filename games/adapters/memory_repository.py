@@ -1,3 +1,5 @@
+from flask_sqlalchemy.session import Session
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from games.adapters.repository import AbstractRepository
 from games.domainmodel import model
@@ -5,7 +7,9 @@ from games.domainmodel.model import Game, User
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 from typing import List
 
-
+DATABASE_URL = "sqlite:///games.db"
+engine = create_engine(DATABASE_URL, echo=True)
+Session = sessionmaker(bind=engine)
 class MemoryRepository(AbstractRepository):
     def __init__(self, session_factory):
         self._session_factory = session_factory
@@ -79,50 +83,19 @@ class MemoryRepository(AbstractRepository):
             return False
 
 
-def populate_to_db(filename, engine):
-    # Create a new session
-    Session = sessionmaker(bind=engine)
+def populate_to_db(filename):
     session = Session()
 
-    # Read the games.csv file
-    reader = GameFileCSVReader(filename)
-    reader.read_csv_file()
-    games = reader.dataset_of_games
+    game_reader = GameFileCSVReader(filename)
+    game_reader.read_csv_file()
 
-    # First, add all unique publishers and genres to the session
-    publishers_set = set()
-    genres_set = set()
+    for publisher in game_reader.dataset_of_publishers:
+        session.add(publisher)
 
-    for game in games:
-        if game.publisher and game.publisher.publisher_name:
-            publishers_set.add(game.publisher.publisher_name)
+    for genre in game_reader.dataset_of_genres:
+        session.add(genre)
 
-    # Add publishers to the session
-    for publisher_name in publishers_set:
-        if publisher_name:  # Ensure that the publisher_name is not None or empty
-            print(f"Attempting to add publisher: {publisher_name}")  # Debug print
-            publisher = session.query(model.Publisher).filter_by(publisher_name=publisher_name).first()
-            if not publisher:
-                session.add(model.Publisher(publisher_name=publisher_name))
-            else:
-                print(f"Publisher {publisher_name} already exists in the database.")  # Debug print
-        else:
-            print("Encountered an empty or None publisher name.")
-
-            # Add genres to the session
-    for genre_name in genres_set:
-        genre = session.query(model.Genre).filter_by(name=genre_name).first()
-        if not genre:
-            session.add(model.Genre(genre_name=genre_name))
-
-    # Commit publishers and genres first
-    session.commit()
-
-    # Now, add games to the session
-    for game in games:
-        if game.title:
-            session.add(game)
-
-    # Commit the session to save changes to the database
+    for game in game_reader.dataset_of_games:
+        session.add(game)
     session.commit()
     session.close()

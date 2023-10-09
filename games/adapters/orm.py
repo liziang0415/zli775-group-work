@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import Table, Column, Integer, String, ForeignKey, Float, Date, DateTime
 from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import mapper, relationship
+from sqlalchemy.orm import mapper, relationship, registry
 
 from games.domainmodel import model
 
@@ -65,27 +65,29 @@ wishlists_table = Table(
 )
 
 
+mapper_registry = registry()
+
 def map_model_to_tables():
     try:
-        mapper(model.Publisher, publishers_table)
+        mapper_registry.map_imperatively(model.Publisher, publishers_table)
 
-        mapper(model.Genre, genres_table, properties={
+        mapper_registry.map_imperatively(model.Genre, genres_table, properties={
             'games': relationship(model.Game, secondary=game_genres_table, back_populates='genres')
         })
 
-        mapper(model.Game, games_table, properties={
+        mapper_registry.map_imperatively(model.Game, games_table, properties={
             'publisher': relationship(model.Publisher),
             'genres': relationship(model.Genre, secondary=game_genres_table, back_populates='games'),
             'reviews': relationship(model.Review, backref='game'),
-            'users_wishing': relationship(model.User, secondary=wishlists_table, back_populates='wishlist')  # Added this line
+            'users_wishing': relationship(model.User, secondary=wishlists_table, back_populates='wishlist')
         })
 
-        mapper(model.User, users_table, properties={
+        mapper_registry.map_imperatively(model.User, users_table, properties={
             'reviews': relationship(model.Review, backref='user'),
             'wishlist': relationship(model.Game, secondary=wishlists_table, back_populates='users_wishing')
         })
 
-        mapper(model.Review, reviews_table)
+        mapper_registry.map_imperatively(model.Review, reviews_table)
 
     except Exception as e:
         print(f"Error mapping models to tables: {e}")

@@ -6,3 +6,4 @@ wtforms==2.3.3
 flask-login
 bcrypt
 SQLAlchemy==1.4.41
+Flask-SQLAlchemy

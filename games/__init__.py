@@ -28,7 +28,7 @@ def create_app(test_config=None):
     orm.metadata.create_all(orm.engine)
     orm.map_model_to_tables()
     repo.repo_instance = MemoryRepository(Session)
-    populate_to_db("games/adapters/data/games.csv", engine)
+    populate_to_db("games/adapters/data/games.csv")
 
     app.register_blueprint(home_bp)
     app.register_blueprint(games_bp)
