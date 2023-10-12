@@ -23,8 +23,12 @@ class GameFileCSVReader:
                     title = row["Name"]
                     game = Game(game_id, title)
                     game.release_date = row["Release date"]
+                    game.image_url = row["Header image"]
                     game.price = float(row["Price"])
                     game.description = row["About the game"]
+                    screenshot_urls = row["Screenshots"].split(",")
+                    for url in screenshot_urls:
+                        game.add_screenshot(url.strip())
 
                     publisher = Publisher(row["Publishers"])
                     self.__dataset_of_publishers.add(publisher)
@@ -63,3 +67,4 @@ class GameFileCSVReader:
     @property
     def dataset_of_genres(self) -> set:
         return self.__dataset_of_genres
+

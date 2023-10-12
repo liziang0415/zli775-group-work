@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from sqlalchemy.orm import relationship
+
 
 class Publisher:
     def __init__(self, publisher_name: str):
@@ -34,6 +36,7 @@ class Publisher:
 
     def __hash__(self):
         return hash(self.__publisher_name)
+
 
 
 class Genre:
@@ -83,6 +86,7 @@ class Game:
         self.__genres: list = []
         self.__reviews: list = []
         self.__publisher = None
+        self.__screenshots = []
 
     @property
     def publisher(self) -> Publisher:
@@ -94,6 +98,13 @@ class Game:
             self.__publisher = publisher
         else:
             self.__publisher = None
+
+    @property
+    def screenshots(self) -> list:
+        return self.__screenshots
+
+    def add_screenshot(self, url: str):
+        self.__screenshots.append(url)
 
     @property
     def game_id(self):
@@ -191,6 +202,15 @@ class Game:
         except ValueError:
             print(f"Could not find {genre} in list of genres.")
             pass
+
+    def average_rating(self):
+        if len(self.__reviews) == 0:
+            return "No ratings yet"
+        total_rating = sum([review.rating for review in self.__reviews])
+        return round(total_rating / len(self.__reviews), 2)
+
+    def add_review(self, review):
+        self.__reviews.append(review)
 
     def __repr__(self):
         return f"<Game {self.__game_id}, {self.__game_title}>"

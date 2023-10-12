@@ -1,2 +1,13 @@
 pytest
 Flask==2.3.2
+Flask-WTF==1.1.1
+password-validator==1.0
+wtforms==2.3.3
+flask-login
+bcrypt
+<<<<<<< Updated upstream
+SQLAlchemy==1.4.41
+Flask-SQLAlchemy
+=======
+SQLAlchemy==1.4.41
+>>>>>>> Stashed changes

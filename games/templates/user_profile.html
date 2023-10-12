@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user_profile</title>
+    <script src="static/user_profile.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+</head>
+
+<body>
+<div id="navBar">
+    <h1 class="navTitle">235GAME</h1>
+    <h2 class="navTitle"><a href="/" target="_blank">Home</a></h2>
+    <h2 class="navTitle"><a href="games" target="_blank">All Games</a></h2>
+    <h2 class="navTitle"><a href="user_profile" target="_blank">User Profile</h2>
+    <div id="login">
+        {% include 'loginstatus.html' %}
+    </div>
+</div>
+
+<div id="userInfo">
+    <h1 id="profileTitle">Welcome, {{ session['username'] }} » profile</h1>
+</div>
+<div id="profileNav">
+    <span class="selectionTab" style="cursor: pointer;" onclick="showWishlist();">Wishlist</span>
+    <span class="selectionTab" style="cursor: pointer;" onclick="showReviews();">Reviews & Ratings</span>
+</div>
+<div id="baseline"></div>
+
+<div id="wishlist">
+    {% for game in wishlist %}
+    <div class="gameItem">
+        <div id="wishlistLeftPart">
+            <img src="{{ game.image_url }}">
+            <div class="textPart">
+                <h1 class="wishlistTitile">{{ game.title }}</h1>
+                <h4 class="wishilistContent">PRICE: {{ game.price }}</h4>
+                <h4 class="wishilistContent">RELEASE DATE : {{ game.release_date }}</h4>
+            </div>
+            <a href="{{ url_for('game_description_bp.game_description', title=game.title) }}">
+            </a>
+        </div>
+        <a href="{{ url_for('wishlist.remove', game_title=game.title) }}" class="remove-button">Remove from Wishlist</a>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="displayReview2">
+    {% for review in reviews %}
+    <div class="profileReview">
+            <div id="reviewContentPart">
+                <h2 id="reviewContent">{{ review.game.title }} | </h2>
+                <div id="baseline2"></div>
+                <h4>{{ review.comment }} </h4>
+            </div>
+            <h2 id="ratingArea">️️️️️️⭐️️️Rating: {{ review.rating }}</h2>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="footer">
+    <h6>©️Paul/Kevin/Tong</h6>
+</div>
+</body>
+</html>
