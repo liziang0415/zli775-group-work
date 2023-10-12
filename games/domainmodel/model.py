@@ -1,7 +1,5 @@
 from datetime import datetime
 
-from sqlalchemy.orm import relationship
-
 
 class Publisher:
     def __init__(self, publisher_name: str):
@@ -36,7 +34,6 @@ class Publisher:
 
     def __hash__(self):
         return hash(self.__publisher_name)
-
 
 
 class Genre:

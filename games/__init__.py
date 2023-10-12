@@ -1,21 +1,4 @@
-<<<<<<< Updated upstream
-from flask import Flask
-from sqlalchemy.orm import sessionmaker
-
-from .adapters import orm
-from .gameDescription_bp import game_description_bp
-from .home_bp import home_bp
-from .games_bp import games_bp
-from.search_bp import search_bp
-from.login_bp import login_bp
-from.user_profile_bp import user_profile_bp
-from.wishlist_bp import wishlist_bp
-from games.adapters.memory_repository import MemoryRepository, populate_to_db
-import games.adapters.repository as repo
-from games.adapters.orm import engine, games_table
-=======
 import os
-
 from flask import Flask
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
@@ -26,12 +9,11 @@ from .search_bp import search_bp
 from .login_bp import login_bp
 from .user_profile_bp import user_profile_bp
 from .wishlist_bp import wishlist_bp
-from .adapters.memory_repository import MemoryRepository,populate
+from .adapters.memory_repository import MemoryRepository, populate
 from .adapters.orm import metadata, map_model_to_tables
 import games.adapters.repository as repo
 
 DATABASE_URI = 'sqlite:///games.db'  # SQLite database URI
->>>>>>> Stashed changes
 
 
 def create_app(test_config=None):
@@ -41,17 +23,6 @@ def create_app(test_config=None):
         SESSION_COOKIE_SECURE=True,
         REMEMBER_COOKIE_SECURE=True,
     )
-<<<<<<< Updated upstream
-    if test_config is not None:
-        app.config.from_mapping(test_config)
-
-    Session = sessionmaker(bind=engine)
-    orm.metadata.create_all(orm.engine)
-    orm.map_model_to_tables()
-    repo.repo_instance = MemoryRepository(Session)
-    populate_to_db("games/adapters/data/games.csv")
-
-=======
 
     if test_config is not None:
         app.config.from_mapping(test_config)
@@ -65,7 +36,6 @@ def create_app(test_config=None):
         metadata.create_all(database_engine)
         populate(repo.repo_instance)
 
->>>>>>> Stashed changes
     app.register_blueprint(home_bp)
     app.register_blueprint(games_bp)
     app.register_blueprint(game_description_bp)
@@ -73,9 +43,4 @@ def create_app(test_config=None):
     app.register_blueprint(login_bp)
     app.register_blueprint(user_profile_bp)
     app.register_blueprint(wishlist_bp, url_prefix='/wishlist')
-<<<<<<< Updated upstream
-
     return app
-=======
-    return app
->>>>>>> Stashed changes

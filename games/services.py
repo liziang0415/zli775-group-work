@@ -1,6 +1,5 @@
 from datetime import datetime
 from games.adapters.repository import AbstractRepository
-from wtforms.validators import ValidationError
 
 
 def get_all_games(repo: AbstractRepository):
@@ -37,10 +36,7 @@ def find_game_by_title(repo: AbstractRepository, title: str):
     for game in all_games:
         if game.title == title:
             return game
-<<<<<<< Updated upstream
     return None
-=======
->>>>>>> Stashed changes
 
 
 def get_filtered_and_sorted_games(repo: AbstractRepository, page=1, genre_filter=None, sort_order='title'):
@@ -55,12 +51,10 @@ def get_filtered_and_sorted_games(repo: AbstractRepository, page=1, genre_filter
         all_games = [game for game in all_games if genre_filter in [genre.genre_name for genre in game.genres]]
 
     if sort_order == 'release_date':
-<<<<<<< Updated upstream
         all_games.sort(key=lambda x: datetime.strptime(x.release_date, "%b %d, %Y") if x.release_date else datetime.min,
                        reverse=True)
-=======
-        all_games.sort(key=lambda x: datetime.strptime(x.release_date, "%b %d, %Y") if x.release_date else datetime.min, reverse=True)
->>>>>>> Stashed changes
+        all_games.sort(key=lambda x: datetime.strptime(x.release_date, "%b %d, %Y") if x.release_date else datetime.min,
+                       reverse=True)
     elif sort_order == 'price':
         all_games.sort(key=lambda x: x.price, reverse=True)
     else:
@@ -74,11 +68,5 @@ def get_filtered_and_sorted_games(repo: AbstractRepository, page=1, genre_filter
     return games_to_display, total_pages
 
 
-
-
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 class NameNotUniqueException(Exception):
     pass
