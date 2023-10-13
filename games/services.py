@@ -1,12 +1,11 @@
 from datetime import datetime
-from games.adapters.repository import AbstractRepository
 
 
-def get_all_games(repo: AbstractRepository):
+def get_all_games(repo):
     return repo.get_games()
 
 
-def get_sorted_publisher_and_genres(repo: AbstractRepository):
+def get_sorted_publisher_and_genres(repo):
     all_publisher = set()
     all_genres = set()
     all_games = repo.get_games()
@@ -21,7 +20,7 @@ def get_sorted_publisher_and_genres(repo: AbstractRepository):
     return all_publisher, all_genres
 
 
-def get_filtered_games(repo: AbstractRepository, query='', genre='', publisher=''):
+def get_filtered_games(repo, query='', genre='', publisher=''):
     all_games = repo.get_games()
     return [
         game for game in all_games if
@@ -31,7 +30,7 @@ def get_filtered_games(repo: AbstractRepository, query='', genre='', publisher='
     ]
 
 
-def find_game_by_title(repo: AbstractRepository, title: str):
+def find_game_by_title(repo, title: str):
     all_games = repo.get_games()
     for game in all_games:
         if game.title == title:
@@ -39,7 +38,7 @@ def find_game_by_title(repo: AbstractRepository, title: str):
     return None
 
 
-def get_filtered_and_sorted_games(repo: AbstractRepository, page=1, genre_filter=None, sort_order='title'):
+def get_filtered_and_sorted_games(repo, page=1, genre_filter=None, sort_order='title'):
     all_games = repo.get_games()
 
     all_genres = set()

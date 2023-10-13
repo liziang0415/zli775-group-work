@@ -9,7 +9,8 @@ def user_profile():
     from games.adapters.repository import repo_instance
     username = session['username']
     user = repo_instance.get_user(username)
+    print(user)
     reviews = user.reviews
-    wishlist = user.favourite_games
+    wishlist = repo_instance.get_wishlist(username)
 
     return render_template('user_profile.html', user=user, reviews=reviews, wishlist=wishlist)

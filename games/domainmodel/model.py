@@ -239,7 +239,7 @@ class User:
             raise ValueError('Password not valid!')
 
         self.__reviews: list[Review] = []
-        self.__favourite_games: list[Game] = []
+        self.__wishlist = None
 
     @property
     def username(self):
@@ -264,18 +264,13 @@ class User:
         self.__reviews.remove(review)
 
     @property
-    def favourite_games(self) -> list:
-        return self.__favourite_games
+    def wishlist(self):
+        return self.__wishlist
 
-    def add_favourite_game(self, game):
-        if not isinstance(game, Game) or game in self.__favourite_games:
-            return
-        self.__favourite_games.append(game)
-
-    def remove_favourite_game(self, game):
-        if not isinstance(game, Game) or game not in self.__favourite_games:
-            return
-        self.__favourite_games.remove(game)
+    @wishlist.setter
+    def wishlist(self, wishlist_obj):
+        if isinstance(wishlist_obj, Wishlist):
+            self.__wishlist = wishlist_obj
 
     def __repr__(self):
         return f"<User {self.__username}>"

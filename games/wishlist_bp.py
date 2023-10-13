@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, session, request
 from games.login_bp import login_required
+from .services import find_game_by_title
 
 wishlist_bp = Blueprint('wishlist', __name__)
 
@@ -9,7 +10,7 @@ wishlist_bp = Blueprint('wishlist', __name__)
 def add(game_title):
     from games.adapters.repository import repo_instance
     username = session['username']
-    game = repo_instance.get_game_by_title(game_title)
+    game = find_game_by_title(repo_instance, game_title)
     if game:
         if repo_instance.is_in_wishlist(username, game):
             flash(f'{game.title} is already in your wishlist!', 'info')
@@ -26,7 +27,7 @@ def add(game_title):
 def remove(game_title):
     from games.adapters.repository import repo_instance
     username = session['username']
-    game = repo_instance.get_game_by_title(game_title)
+    game = find_game_by_title(repo_instance, game_title)
     if game:
         if not repo_instance.is_in_wishlist(username, game):
             flash(f'{game.title} is not in your wishlist!', 'info')

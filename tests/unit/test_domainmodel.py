@@ -291,23 +291,6 @@ def test_user_lt():
     assert sorted(user_list) == [user2, user3, user1]
 
 
-def test_user_add_remove_favourite_games():
-    user1 = User("Shyamli", "pw12345")
-    game1 = Game(1, "Domino Game")
-    game2 = Game(2, "Deer Journey")
-    game3 = Game(3, "Fat City")
-    user1.add_favourite_game(game1)
-    user1.add_favourite_game(game2)
-    user1.add_favourite_game(game3)
-    assert repr(user1.favourite_games) == "[<Game 1, Domino Game>, <Game 2, Deer Journey>, <Game 3, Fat City>]"
-    assert len(user1.favourite_games) == 3
-    game4 = Game(1, "Domino Game")
-    user1.add_favourite_game(game4)
-    assert len(user1.favourite_games) == 3
-    user1.remove_favourite_game(game1)
-    user1.remove_favourite_game(game2)
-    assert repr(user1.favourite_games) == "[<Game 3, Fat City>]"
-
 
 def test_user_add_remove_reviews():
     user = User("Shyamli", "pw12345")

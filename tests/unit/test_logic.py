@@ -1,6 +1,6 @@
 import pytest
 
-from games import MemoryRepository, populate
+from games.adapters.memory_repository import MemoryRepository, populate
 from games.services import get_all_games, get_filtered_games, find_game_by_title, get_filtered_and_sorted_games, \
     get_sorted_publisher_and_genres
 
