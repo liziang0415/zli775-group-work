@@ -1,0 +1,10 @@
+pytest
+Flask==2.3.2
+Flask-WTF
+password-validator==1.0
+wtforms
+flask-login
+bcrypt
+SQLAlchemy==1.4.41
+Flask-SQLAlchemy
+python-dotenv
