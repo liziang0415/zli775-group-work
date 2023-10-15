@@ -1,1 +1,0 @@
-from .csvdatareader import GameFileCSVReader
